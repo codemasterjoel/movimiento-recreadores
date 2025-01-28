@@ -9,6 +9,7 @@ use App\Models\Estado;
 use App\Models\Municipio;
 use App\Models\Parroquia;
 use App\Models\RegistroLuchador;
+use App\Models\Nivel;
 
 use Ramsey\Uuid\Uuid;
 
@@ -20,6 +21,7 @@ class Crear extends Component
     public $estados = null;
     public $municipios  = null; // Liste de Municipios
     public $parroquias  = null; // Lista de parroquias
+    public $niveles = null;
     public $CedulaJefe, $CedulaOrganizador, $CedulaFormador, $CedulaMovilizador, $CedulaDefensa, $CedulaProductivo = null; //Cedula
     public $NombreNBC, $id, $lat, $lon = null; // Nombre del NBC
     public $CantConsejoComunal, $CantBaseMisiones, $CantUrbanismo, $CantCDI = null;
@@ -35,9 +37,6 @@ class Crear extends Component
     }
     public function render()
     {
-        // dd(isset($this->id));
-        $this->lat = '10.494134';
-        $this->lon = '-66.931854';
 
         if ($this->id) {
         $nbc = NBC::findOrFail($this->id);
@@ -81,12 +80,13 @@ class Crear extends Component
         $this->CantUrbanismo = $nbc->cant_urbanismos;
         $this->CantCDI = $nbc->cant_cdi;
         $this->estados = Estado::all();
+        $this->niveles = Nivel::all();
         return view('livewire.n-b-c.crear');
 
         } else {
+            $this->niveles = Nivel::all();
             $nbcs = NBC::all();
             $this->estados = Estado::all();
-            // $this->municipios = Municipio::all();
             return view('livewire.n-b-c.crear', ['nbcs' => $nbcs]);
         }
     }

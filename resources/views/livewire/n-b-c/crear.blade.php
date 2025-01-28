@@ -8,11 +8,16 @@
         <div>    
           <div class="min-h-screen flex items-center justify-center">
               <div class="p-4 w-full bg-white rounded-lg">
-                  <h3 class=" mt-4 text-2xl text-cyan-400 font-bold text-center">REGISTRAR NUEVA BRIGADA</h3>
+                  <h3 class=" mt-4 text-2xl text-cyan-400 font-bold text-center">REGISTRAR ESTRUCTURA</h3>
                   <form>
                       <div class=" flex items-stretch pt-4"> {{-- campo Nombre del NBC --}}
-                          <span class="flex bg-cyan-900 font-bold text-white items-center whitespace-nowrap rounded-l-lg border border-r-0 border-solid border-neutral-900 px-3 py-[0.25rem] text-center">Nombre de la Brigada</span>
-                          <input wire:model="NombreNBC" type="text" class="w-full flex-auto relative pl-3 border border-solid rounded-r-lg font-bold text-neutral-900 text-uppercase outline-2 border-neutral-900" />
+                          <span class="flex bg-cyan-900 font-bold text-white items-center whitespace-nowrap rounded-l-lg border border-r-0 border-solid border-neutral-900 px-3 py-[0.25rem] text-center">NIVEL DE JERARQUIA</span>
+                          <select class="w-full pl-3 border rounded-r-lg text-neutral-900 border-solid border-neutral-900 outline-2 font-bold" wire:model.live="nivelId" required>
+                            <option value="">Seleccione</option>
+                            @foreach( $niveles as $nivel )
+                                <option value="{{ $nivel->id }}">{{ $nivel->nombre }}</option>
+                            @endforeach
+                          </select>
                       </div>
                       <div class="grid grid-cols-3 gap-4 pt-4">
                           <div class="flex items-center justify-center"> {{-- campo estado --}}
@@ -61,41 +66,11 @@
                               </div>
                           @endif
                       </div>
-                      <div class="grid grid-cols-4 gap-4 pt-4">
-                          <div class="flex items-center justify-center py-4"> {{-- campo consejo comunales --}}
-                              <div class="w-full rounded-lg bg-gray-500">
-                                  <div class="flex">
-                                      <input wire:model="CantConsejoComunal" type="number" placeholder="Consejos Comunales" class="w-full bg-white pl-3 text-neutral-900 text-base border font-bold outline-2 rounded-lg border-slate-900">
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="flex items-center justify-center py-4"> {{-- campo base de misiones --}}
-                              <div class="w-full rounded-lg bg-gray-500">
-                                  <div class="flex">
-                                      <input wire:model="CantBaseMisiones" type="number" placeholder="Bases de Misiones" class="w-full bg-white pl-3 text-base text-neutral-900 border font-bold outline-0 rounded-lg border-slate-900">
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="flex items-center justify-center py-4"> {{-- campo urbanismos --}}
-                              <div class="w-full rounded-lg bg-gray-500">
-                                  <div class="flex">
-                                      <input wire:model="CantUrbanismo" type="number" placeholder="Urbanismos" class="w-full bg-white pl-3 text-base border text-neutral-900 font-bold outline-0 rounded-lg border-slate-200">
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="flex items-center justify-center py-4"> {{-- campo cdi --}}
-                              <div class="w-full rounded-lg bg-gray-500">
-                                  <div class="flex">
-                                      <input wire:model="CantCDI" type="number" placeholder="CDI" class="w-full bg-white pl-3 text-base border border-solid text-neutral-900 font-bold outline-0 rounded-lg border-slate-900">
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
                       <div class="grid grid-cols-2 gap-4"> {{-- campo cedula --}}
                           <div class="flex items-center justify-center py-4">
                               <div class="w-full rounded-lg">
                                   <div class="flex">
-                                      <input wire:model="CedulaJefe" type="number" placeholder="Cedula Jefe de Brigada" class="w-full px-3 py-[0.25rem] border text-neutral-900 font-bold outline-2 rounded-tl-lg rounded-bl-lg border-slate-900">
+                                      <input wire:model="CedulaJefe" type="number" placeholder="Cedula" class="w-full px-3 py-[0.25rem] border text-neutral-900 font-bold outline-2 rounded-tl-lg rounded-bl-lg border-slate-900">
                                       <input wire:click="consultar('jefe')" type="button" value="Buscar" class="bg-gradient-primary rounded-tr-lg px-2 rounded-br-lg text-white font-bold transition-colors">
                                   </div>
                               </div>
@@ -112,7 +87,7 @@
 
                       <div class="card card-subcategories card-plain">
                         <div class="card-header">
-                          <h2 class=" mt-4 text-2xl text-cyan-400 font-bold text-center">ESTRUCTURA DE LA BRIGADA</h2>
+                          <h2 class=" mt-4 text-2xl text-cyan-400 font-bold text-center">ESTRUCTURA</h2>
                         </div>
                         <div class="card-body">
                           <ul class="nav nav-pills-primary nav-pills-icons justify-content-center">
@@ -138,7 +113,7 @@
                               <a class="nav-link" wire:click="MenuMovilizacion" data-toggle="tab" href="#">
                                 <div class=" bg-gradient-secondary rounded-t-lg py-3 px-1 text-white">
                                   <div class="card-icon text-center">
-                                    <i class="material-icons">directions_run</i><br>MOVILIZADOR
+                                    <i class="material-icons">directions_run</i><br>COMUNICADOR
                                   </div>
                                 </div>
                               </a>
@@ -147,7 +122,7 @@
                               <a class="nav-link" wire:click="MenuDefensa" data-toggle="tab" href="#">
                                 <div class=" bg-gradient-success rounded-t-lg py-3 px-4 text-white">
                                   <div class="card-icon text-center">
-                                    <i class="material-icons">military_tech</i><br>DEFENSA  
+                                    <i class="material-icons">military_tech</i><br>CONTROL Y SEGUIMIENTO  
                                   </div>
                                 </div>
                               </a>
@@ -156,7 +131,7 @@
                               <a class="nav-link" wire:click="MenuProductivo" data-toggle="tab" href="#">
                                 <div class=" bg-gradient-danger rounded-t-lg py-3 px-2 text-white">
                                   <div class="card-icon text-center">
-                                    <i class="material-icons">grass</i><br>PRODUCTIVO
+                                    <i class="material-icons">grass</i><br>SECRETARIO GENERAL
                                   </div>
                                 </div>
                               </a>
@@ -234,7 +209,7 @@
                                 <div class="peer flex flex-row-reverse h-8 items-center gap-4 rounded-full bg-cyan-600 px-3 after:absolute after:left-1 after: after:h-6 after:w-10 after:rounded-full after:bg-white/40 after:transition-all after:content-[''] peer-checked:bg-orange-600 cheked value='0' peer-checked:after:translate-x-full peer-focus:outline-none text-white">
                                     <span>SI</span>
                                     <span>NO</span>
-                                </div><h5 class="p-2"> Posee Movilizador?</h5>
+                                </div><h5 class="p-2"> Posee Comunicador?</h5>
                               </label>
 
                               @if ($FormMovilizador)
@@ -266,7 +241,7 @@
                                 <div class="peer flex flex-row-reverse h-8 items-center gap-4 rounded-full bg-cyan-600 px-3 after:absolute after:left-1 after: after:h-6 after:w-10 after:rounded-full after:bg-white/40 after:transition-all after:content-[''] peer-checked:bg-orange-600 cheked value='0' peer-checked:after:translate-x-full peer-focus:outline-none text-white">
                                     <span>SI</span>
                                     <span>NO</span>
-                                </div><h5 class="p-2"> Posee el de Defensa?</h5>
+                                </div><h5 class="p-2"> ¿Posee el de Control y Seguimiento?</h5>
                               </label>
 
                               @if ($FormDefensa)
@@ -298,7 +273,7 @@
                                 <div class="peer flex flex-row-reverse h-8 items-center gap-4 rounded-full bg-cyan-600 px-3 after:absolute after:left-1 after: after:h-6 after:w-10 after:rounded-full after:bg-white/40 after:transition-all after:content-[''] peer-checked:bg-orange-600 cheked value='0' peer-checked:after:translate-x-full peer-focus:outline-none text-white">
                                     <span>SI</span>
                                     <span>NO</span>
-                                </div><h5 class="p-2"> Posee Productor?</h5>
+                                </div><h5 class="p-2"> ¿Posee Secretario General?</h5>
                               </label>
 
                               @if ($FormProductivo)
@@ -322,23 +297,6 @@
                                 </div>
                               @endif
                             @endif
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <div class="font-weight-bold text-white text-center"><h3>GEOREFERENCIACION</h3></div>
-                            </div>
-                          </div>
-                          <div class="items-center">
-                            <div wire:ignore id="map" style= "width: 100%; height: 600px;" class="mb-4"></div>
-                          </div>
-                          <div class="row">
-                            <label>COORDENADA UTM</label>
-                            <div class="col-sm-3">
-                                <input wire:model="lat" type="text" name="latitud" value="10.494134" id="latitud" class="form-control">
-                            </div>
-                            <div class="col-sm-3">
-                              <input wire:model="lon" type="text" name="longitud" value="-66.931854" id="longitud" class="form-control">
-                            </div>
-                          </div>
                             <div class="px-4 py-3 sm:px-6 sm:flex">                                  
                               <span class="flex w-full rounded-md sm:ml-3 sm:w-auto">
                                   <button type="submit" class="w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" wire:click.prevent="guardar()"  >GUARDAR</button>

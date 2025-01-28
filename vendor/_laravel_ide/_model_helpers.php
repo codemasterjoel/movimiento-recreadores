@@ -13,6 +13,7 @@ namespace App\Models {
      * @property bigint(20) unsigned|null $municipio_id
      * @property bigint(20) unsigned|null $estado_id
      * @property bigint(20) unsigned|null $responsabilidad_id
+     * @property bigint(20) unsigned|null $profesion_id
      * @property bigint(20) unsigned|null $nivel_academico_id
      * @property bigint(20) unsigned|null $genero_id
      * @property string|null $codigo
@@ -25,7 +26,6 @@ namespace App\Models {
      * @property string $apellido
      * @property string $nombre
      * @property int(11) $cedula
-     * @property date|null $inactivo
      * @property tinyint(1) $estatus
      * @property string $letra
      * @property char(36) $id
@@ -40,7 +40,6 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereLetra($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereEstatus($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereInactivo($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereCedula($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereNombre($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereApellido($value)
@@ -53,6 +52,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereCodigo($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereGeneroId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereNivelAcademicoId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereProfesionId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereResponsabilidadId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereEstadoId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|RegistroLuchador whereMunicipioId($value)
@@ -3198,6 +3198,16 @@ namespace App\Models {
     /**
      * App\Models\Profesion
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property bigint(20) unsigned|null $nivel_academico_id
+     * @property string $nombre
+     * @property int $id
+     * @method static \Illuminate\Database\Eloquent\Builder|Profesion whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Profesion whereNombre($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Profesion whereNivelAcademicoId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Profesion whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Profesion whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Profesion newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Profesion newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Profesion query()

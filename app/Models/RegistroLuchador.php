@@ -30,7 +30,7 @@ class RegistroLuchador extends Model
         'fecha_nac',
         'telefono',
         'correo',
-        'avanzada_id',
+        'profesion_id',
         'genero_id',
         'nivel_academico_id',
         'responsabilidad_id',
@@ -38,11 +38,12 @@ class RegistroLuchador extends Model
         'municipio_id',
         'parroquia_id',
         'direccion',
-        'pais_id',
         'letra',
         'edad',
         'inactivo',
-        'hijos'
+        'cuenta',
+        'serial',
+        'codigo',
 
     ];
 

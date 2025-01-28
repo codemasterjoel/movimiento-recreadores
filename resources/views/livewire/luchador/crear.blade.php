@@ -19,7 +19,7 @@
                     <div class="flex items-center justify-center">
                         <img src="{{asset('img/logo.png')}}" class="w-52">
                     </div>
-                    <h3 class="text-2xl text-cyan-400 font-bold text-center">REGISTRAR NUEVO PERSONAL</h3>
+                    <h3 class="text-2xl text-cyan-400 font-bold text-center">REGISTRAR NUEVO BRIGADISTA</h3>
                     <form>
                         <div class="row">
                             <div class="col-xl-4 col-sm-12 mb-xl-0">
@@ -51,13 +51,13 @@
                                     <div class="w-full rounded-lg">
                                         <div class="flex">
                                             <span class="flex bg-cyan-900 text-white items-center font-bold whitespace-nowrap rounded-l-lg border-r-0 border-solid px-3 py-[0.25rem] text-center text-base leading-[1.6] dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200">Nacionalidad</span>
-                                            <select wire:model.live="nacionalidad" class="relative m-0 -ml-px block w-[1px] min-w-0 flex-auto rounded-r-lg border border-solid border-neutral-900 bg-clip-padding px-3 py-[0.25rem] font-bold leading-[1.6] text-neutral-900 outline-2 transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary">
+                                            <select wire:model="letra" class="relative m-0 -ml-px block w-[1px] min-w-0 flex-auto rounded-r-lg border border-solid border-neutral-900 bg-clip-padding px-3 py-[0.25rem] font-bold leading-[1.6] text-neutral-900 outline-2 transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary">
                                                 <option value="">Seleccione</option>
                                                 <option value="V">V</option>
                                                 <option value="E">E</option>
                                             </select>
                                         </div>
-                                        @error('nacionalidadId') <div class="text-danger">{{ $message }}</div> @enderror
+                                        @error('letra') <div class="text-danger">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@
                                     <div class="w-full rounded-lg">
                                         <div class="flex">
                                             <span class="bg-cyan-900 py-[0.25rem] px-3 rounded-tl-lg rounded-bl-lg text-white font-bold">Nivel Academico</span>
-                                            <select class=" flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model="nivelAcademicoId" required>
+                                            <select class=" flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model.live="nivelAcademicoId" required>
                                                 <option value="">Seleccione</option>
                                                 @foreach( $nivelesAcademicos as $nivelacademico )
                                                     <option value="{{ $nivelacademico->id }}">{{ $nivelacademico->nombre }}</option>
@@ -216,22 +216,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="flex items-center justify-center pb-4"> {{-- campo Responsabilidad --}}
-                                    <div class="w-full rounded-lg">
-                                        <div class="flex">
-                                            <span class="bg-cyan-900 py-[0.25rem] px-3 rounded-tl-lg rounded-bl-lg text-white font-bold">Profesión</span>
-                                            <select class=" flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model="profesionId" required>
-                                                <option value="">Seleccione</option>
-                                                @foreach( $profesiones as $profesion )
-                                                    <option value="{{ $profesion->id }}">{{ $profesion->nombre }}</option>
-                                                @endforeach
-                                            </select>
+                            @if (!is_null($profesiones))
+                                <div class="col-6">
+                                    <div class="flex items-center justify-center pb-4"> {{-- campo Responsabilidad --}}
+                                        <div class="w-full rounded-lg">
+                                            <div class="flex">
+                                                <span class="bg-cyan-900 py-[0.25rem] px-3 rounded-tl-lg rounded-bl-lg text-white font-bold">Profesión</span>
+                                                <select class=" flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model.live="profesionId" required>
+                                                    <option value="">Seleccione</option>
+                                                    @foreach( $profesiones as $profesion )
+                                                        <option value="{{ $profesion->id }}">{{ $profesion->nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('profesionId') <div class="text-danger">{{ $message }}</div> @enderror
                                         </div>
-                                        @error('profesionId') <div class="text-danger">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                         <div class="row">
                             <div class="col-6">
@@ -275,9 +277,9 @@
                                 <div class="w-full rounded-lg">
                                     <div class="flex">
                                         <span class="bg-cyan-900 py-[0.25rem] px-3 rounded-tl-lg rounded-bl-lg text-white font-bold">Código</span>
-                                        <input wire:model="serial" type="number" class="w-full pl-3 border border-solid text-neutral-900 rounded-r-lg font-bold outline-2 border-slate-900" />
+                                        <input wire:model="codigo" type="number" class="w-full pl-3 border border-solid text-neutral-900 rounded-r-lg font-bold outline-2 border-slate-900" />
                                     </div>
-                                    @error('serial') <div class="text-danger">{{ $message }}</div> @enderror
+                                    @error('codigo') <div class="text-danger">{{ $message }}</div> @enderror
                                 </div>
                             </div>
                         </div>

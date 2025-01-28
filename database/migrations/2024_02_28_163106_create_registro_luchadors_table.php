@@ -16,7 +16,6 @@ return new class extends Migration
             $table->uuid('id')->primary()->default(Uuid::uuid4()->toString());
             $table->string('letra')->default('V');
             $table->boolean('estatus')->default('1');
-            $table->date('inactivo')->nullable();
             $table->Integer('cedula')->unique();
             $table->string('nombre');
             $table->string('apellido');
@@ -25,8 +24,8 @@ return new class extends Migration
             $table->string('correo');
             $table->Integer('edad');
             $table->bigInteger('cuenta')->nullable();
-            $table->integer('serial')->nullable();
-            $table->string('codigo')->nullable();
+            $table->bigInteger('serial')->nullable();
+            $table->bigInteger('codigo')->nullable();
             $table->foreignId('genero_id')->nullable()->references('id')->on('generos')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('nivel_academico_id')->nullable()->references('id')->on('nivel_academicos')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('profesion_id')->nullable()->references('id')->on('profesions')->nullOnDelete()->cascadeOnUpdate();

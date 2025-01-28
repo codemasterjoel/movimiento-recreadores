@@ -15,7 +15,6 @@ class NivelSeeder extends Seeder
             ['nombre' => 'Regional'],
             ['nombre' => 'Municipal'],
             ['nombre' => 'Parroquial'],
-            ['nombre' => 'NBC']
         ]);
     }
 }

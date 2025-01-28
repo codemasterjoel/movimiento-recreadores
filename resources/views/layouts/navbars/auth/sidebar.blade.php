@@ -5,7 +5,7 @@
             <img src="{{asset('img/logo.png')}}" class="">
         </a>
     </div>
-    <div class=" navbar-collapse w-auto" id="sidenav-collapse-main">
+    <div class="navbar navbar-collapse w-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             {{-- INICIO --}}    
             <li class="nav-item">
@@ -51,7 +51,16 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">CONFIGURACIÓN</h6>
             </li>
             @endif
-                @if (auth()->user()->nivel_id == 1)
+            @if (auth()->user()->nivel_id == 1)
+                {{-- GESTIÓN DE USUARIOS --}}
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::currentRouteName() == 'usuario' ? 'active' : '' }}" href="{{ route('usuario') }}">
+                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <span class="material-icons {{ in_array(request()->route()->getName(),['usuario']) ? 'text-white' : 'text-dark' }}">manage_accounts</span>
+                        </div>
+                        <span class="nav-link-text ms-1"><b>GESTIÓN DE USUARIOS</b></span>
+                    </a>
+                </li>
             @endif
             <li class="nav-item">
                 <a href="{{ url('logout') }}" class=" nav-link btn bg-gradient-danger active text-white" role="button" aria-pressed="true">Salir</a>

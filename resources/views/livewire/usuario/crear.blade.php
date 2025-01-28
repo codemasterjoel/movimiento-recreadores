@@ -17,7 +17,7 @@
             <div class="min-h-screen flex justify-center">
                 <div class="p-4 w-full bg-white rounded-lg">
                     <div class="flex justify-center">
-                        <img src="{{asset('img/logo.svg')}}" class="w-52">
+                        <img src="{{asset('img/logo.png')}}" class="w-52">
                     </div>
                     <h3 class="text-2xl text-cyan-400 font-semibold text-center pb-4">REGISTRO DE USUARIOS</h3>
                     <form>
