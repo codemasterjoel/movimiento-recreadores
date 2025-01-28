@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('codigo')->nullable();
             $table->foreignId('genero_id')->nullable()->references('id')->on('generos')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('nivel_academico_id')->nullable()->references('id')->on('nivel_academicos')->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignId('profesion_id')->nullable()->references('id')->on('profesions')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('responsabilidad_id')->nullable()->references('id')->on('responsabilidads')->nullOnDelete()->cascadeOnUpdate();
             // $table->foreignIdFor(Pais::class)->nullable()->references('id')->on('pais')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('estado_id')->nullable()->references('id')->on('estados')->nullOnDelete()->cascadeOnUpdate();

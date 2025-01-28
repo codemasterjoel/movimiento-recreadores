@@ -16,6 +16,7 @@ use App\Models\Saime;
 use App\Mail\UserCreated;
 use App\Models\Pais;
 use Carbon\Carbon;
+use App\Models\Profesion;
 
 use Ramsey\Uuid\Uuid;
 use Livewire\WithPagination;
@@ -32,7 +33,7 @@ class Index extends Component
     public $estados     = null; // Lista de estados
     public $municipios  = null; // Liste de Municipios
     public $parroquias  = null; // Lista de parroquias
-    public $nivelesAcademicos = null; //Niveles Academicos
+    public $nivelesAcademicos, $profesiones = null; //Niveles Academicos
     public $responsabilidades = null; //Responsabilidades
     public $cedula, $nacionalidad = null; //Cedula
     public $avanzadas = null; //Avanzadas
@@ -46,7 +47,7 @@ class Index extends Component
     public $inactivo = null; //Fecha de inactivo
     public $id = null; //Id
     public $search = "";
-    public $paisId, $estadoId, $municipioId, $parroquiaId, $nivelAcademicoId, $responsabilidadId, $avanzadaId, $generoId = null; //Id que recibo de los campos
+    public $paisId, $estadoId, $municipioId, $parroquiaId, $nivelAcademicoId, $responsabilidadId, $profesionId, $generoId = null; //Id que recibo de los campos
 
     public function updatingSearch()
     {
@@ -59,6 +60,7 @@ class Index extends Component
         ->paginate(5);
         $this->estados = Estado::all();
         $this->nivelesAcademicos = NivelAcademico::all();
+        $this->profesiones = Profesion::all();
         $this->responsabilidades = Responsabilidad::where('nivel','>=', auth()->user()->nivel_id)->pluck('nombre', 'id');
         $this->generos = Genero::all();
 
@@ -95,7 +97,7 @@ class Index extends Component
         $this->fechaNacimiento = null;
         $this->telefono = null;
         $this->correo = null;
-        $this->avanzadaId = null;
+        $this->profesionId = null;
         $this->generoId = null;
         $this->nivelAcademicoId = null;
         $this->responsabilidadId = null;

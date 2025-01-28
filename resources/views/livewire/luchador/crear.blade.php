@@ -221,14 +221,14 @@
                                     <div class="w-full rounded-lg">
                                         <div class="flex">
                                             <span class="bg-cyan-900 py-[0.25rem] px-3 rounded-tl-lg rounded-bl-lg text-white font-bold">Profesión</span>
-                                            <select class=" flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model="nivelAcademicoId" required>
+                                            <select class=" flex-auto w-[1px] pl-3 border border-solid rounded-r-lg border-slate-900 text-slate-900 outline-2 font-bold" wire:model="profesionId" required>
                                                 <option value="">Seleccione</option>
-                                                @foreach( $nivelesAcademicos as $nivelacademico )
-                                                    <option value="{{ $nivelacademico->id }}">{{ $nivelacademico->nombre }}</option>
+                                                @foreach( $profesiones as $profesion )
+                                                    <option value="{{ $profesion->id }}">{{ $profesion->nombre }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        @error('nivelAcademicoId') <div class="text-danger">{{ $message }}</div> @enderror
+                                        @error('profesionId') <div class="text-danger">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
                             </div>
