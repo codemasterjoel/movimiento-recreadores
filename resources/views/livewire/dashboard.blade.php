@@ -7,7 +7,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Personal</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Recreadores</p>
                     <h5 class="font-weight-bolder mb-0">{{$luchadores->count()}}</h5>
                   </div>
                 </div>
@@ -27,7 +27,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">1x10</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">NRC</p>
                     <h5 class="font-weight-bolder mb-0">{{$jefe}}</h5>
                   </div>
                 </div>
@@ -46,7 +46,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">MUJER</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Voluntarios</p>
                     <h5 class="font-weight-bolder mb-0">{{ $luchadores->where('genero_id', 2)->count() }}</h5>
                   </div>
                 </div>
@@ -65,7 +65,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">HOMBRE</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Recreador</p>
                     <h5 class="font-weight-bolder mb-0">{{ $luchadores->where('genero_id', 1)->count() }}</h5>
                   </div>
                 </div>
@@ -84,7 +84,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-xs mb-0 text-capitalize">FORMACIÓN</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Lider Recreador</p>
                     <h5 class="font-weight-bolder mb-0">{{$formacions->count()}}</h5>
                   </div>
                 </div>
@@ -103,7 +103,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-xs mb-0 text-capitalize">POSTULADOS</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">POSTULADOS</p>
                     <h5 class="font-weight-bolder mb-0">{{$postulados->count()}}</h5>
                   </div>
                 </div>
@@ -121,7 +121,7 @@
         <div class="col-4">
           <div class="card">
             <div class="card-body p-3">
-              <h5 class=" font-bold text-uppercase">Personal por Genero</h5>
+              <h5 class=" font-bold text-uppercase">Recreador por Genero</h5>
               <div class="row">
                 <div class="ms-auto text-center mt-5 mt-lg-0">
                   <div class=" border-radius-lg h-100">
@@ -135,7 +135,7 @@
         <div class="col-4">
           <div class="card">
             <div class="card-body p-3">
-              <h5 class=" font-bold text-uppercase">personal por nivel académico</h5>
+              <h5 class=" font-bold text-uppercase">Recreadores por nivel académico</h5>
               <div class="row">
                 <div class="ms-auto text-center mt-5 mt-lg-0">
                   <div class=" border-radius-lg h-100">
@@ -149,7 +149,7 @@
         <div class="col-4">
           <div class="card">
             <div class="card-body p-3">
-              <h5 class=" font-bold text-uppercase">personal por responsabilidad</h5>
+              <h5 class=" font-bold text-uppercase">recreadores activos e inactivos</h5>
               <div class="row">
                 <div class="ms-auto text-center mt-5 mt-lg-0">
                   <div class=" border-radius-lg h-100">
@@ -165,7 +165,7 @@
         <div class="col-lg-12 mb-lg-0 mb-4">
           <div class="card">
             <div class="card-body p-3">
-              <h5 class=" font-bold">PERSONAL POR ESTADO</h5>
+              <h5 class=" font-bold">RECREADORES POR ESTADO</h5>
               <div class="row">
                 <div class="ms-auto text-center mt-5 mt-lg-0">
                   <div class=" border-radius-lg h-100">
@@ -181,7 +181,7 @@
         <div class="col-lg-12 mb-lg-0 mb-4">
           <div class="card">
             <div class="card-body p-3">
-              <h5 class=" font-bold">INTEGRANTES POR ESTADO</h5>
+              <h5 class=" font-bold">NÚCLEO DE RECREACIÓN COMUNITARIO POR ESTADO</h5>
               <div class="row">
                 <div class="ms-auto text-center mt-5 mt-lg-0">
                   <div class=" border-radius-lg h-100">

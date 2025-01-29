@@ -262,7 +262,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="font-bold">Carnet de la Patria</div>
                         <div class="row"> {{-- campo Correo --}}
                             <div class="col-6">
                                 <div class="w-full rounded-lg">

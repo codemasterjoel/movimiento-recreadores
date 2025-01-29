@@ -5,7 +5,7 @@
     @if(session()->has('success')== 'success')
         @include('livewire.components.success')
     @endif
-    <div class="page-header section-height-75">
+    <div class="page-header" style="background-image:url('{{asset('img/fondo.svg')}}'">
         <div class="container">
             <div class="nav-item d-flex p-2 flex z-40">
                 <a href="/postulacion" wire:navigate class=" text-red-500 mb-0 text-bold text-uppercase absolute text-xl" role="button" aria-pressed="true">Te gustaria pertenecer al Movimiento!!</a>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                        <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{{asset('img/esta_13.jpg')}}')"></div>
+                        <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{{asset('img/fondo.jpg')}}')"></div>
                     </div>
                 </div>
             </div>

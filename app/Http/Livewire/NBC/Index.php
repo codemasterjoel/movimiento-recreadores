@@ -8,6 +8,8 @@ use App\Models\NBC;
 use App\Models\Estado;
 use App\Models\Municipio;
 use App\Models\Parroquia;
+use App\Models\Nivel;
+use App\Models\RegistroLuchador;
 
 use Ramsey\Uuid\Uuid;
 use Livewire\WithPagination;
@@ -17,21 +19,17 @@ class Index extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $modal, $PoseeOrganizador, $PoseeFormador, $PoseeMovilizador, $PoseeDefensa, $PoseeProductivo = false;
-    public $ContentOrganizador, $ContentFormador, $ContentMovilizador, $ContentDefensa, $ContentProductivo = false;
-    public $FormOrganizador, $FormFormador, $FormMovilizador, $FormDefensa, $FormProductivo = false;
-    public $estados     = null; // Lista de estados
-    public $municipios  = null; // Liste de Municipios
-    public $parroquias  = null; // Lista de parroquias
-    public $CedulaJefe, $CedulaOrganizador, $CedulaFormador, $CedulaMovilizador, $CedulaDefensa, $CedulaProductivo = null; //Cedula
-    public $NombreNBC, $id = null; // Nombre del NBC
-    public $CantConsejoComunal, $CantBaseMisiones, $CantUrbanismo, $CantCDI = null;
-    public $NombreJefe, $NombreOrganizador, $NombreFormador, $NombreMovilizador, $NombreDefensa, $NombreProductivo = null; // nombre
-    public $IdJefe, $IdOrganizador, $IdFormador, $IdMovilizador, $IdDefensa, $IdProductivo = null; // nombre
+    public $modal, $PoseeJefe, $PoseeOrganizador, $PoseeFormador, $PoseeComunicador = false;
+    public $ContentDefensa, $ContentOrganizador, $ContentFormador, $ContentComunicador  = false;
+    public $FormJefe, $FormOrganizador, $FormFormador, $FormComunicador = false;
+    public $estados, $niveles, $municipios, $parroquias  = null; 
+    public $CedulaJefe, $CedulaOrganizador, $CedulaFormador, $CedulaComunicador = null; //Cedula
+    public $NombreNRC, $id = null; // Nombre del NBC
+    public $circuitos_comunales, $bases_misiones, $casa_alimentacion, $consejos_comunales, $urbanismos, $parques_nacionales, $parques_recreacion, $rios, $playas, $balnearios, $plazas, $canchas = null;
+    public $NombreJefe, $NombreOrganizador, $NombreFormador, $NombreComunicador = null; // nombre
+    public $IdJefe, $IdOrganizador, $IdFormador, $IdComunicador = null; // nombre
     public $search = "";
-
     public $estadoId, $municipioId, $parroquiaId = null; //Id que recibo de los campos
-
     public $index = true;
 
     public function updatingSearch()
@@ -40,17 +38,11 @@ class Index extends Component
     }
     public function render()
     {
-        if ($this->index)
-        {
-            $nbcs = NBC::where('nombre', 'like', "%$this->search%")
-            ->paginate(5);
-            $this->estados = Estado::all();
-            return view('livewire.n-b-c.index', ['nbcs' => $nbcs]);
-        }else
-        {
-            $this->estados = Estado::all();
-            return view('livewire.n-b-c.crear');
-        }
+        $this->niveles = Nivel::all();
+        $nrcs = NBC::where('nombre', 'like', "%$this->search%")
+        ->paginate(5);
+        $this->estados = Estado::all();
+        return view('livewire.n-b-c.index', ['nrcs' => $nrcs]);
     }
     public function crear()
     {
@@ -88,190 +80,136 @@ class Index extends Component
         if ($estructura == 'jefe') 
         {
 
-            $validar_lsb = RegistroLuchador::where('cedula', $this->CedulaJefe)->firstOrFail(); 
+            $validar_recredor = RegistroLuchador::where('cedula', $this->CedulaJefe)->firstOrFail(); 
 
-            $existelsb = nbc::where('jefe_id', '=', $validar_lsb->id)
+            $existerecreador = nbc::where('jefe_id', '=', $validar_lsb->id)
                 ->orWhere('organizador_id', '=', $validar_lsb->id)
                 ->orWhere('formador_id', '=', $validar_lsb->id)
-                ->orWhere('movilizador_id', '=', $validar_lsb->id)
-                ->orWhere('defensa_id', '=', $validar_lsb->id)
-                ->orWhere('productivo_id', '=', $validar_lsb->id)->get();
+                ->orWhere('comunicador_id', '=', $validar_lsb->id)->get();
 
-            if (count($existelsb) > 0)
+            if (count($existerecreador) > 0)
             {
                 session()->flash('yaregistrado', 'yaregistrado');
             }
             else{
-                $Luchador = RegistroLuchador::where('cedula', '=', $this->CedulaJefe)->firstOrFail();
-                $this->NombreJefe = $Luchador->NombreCompleto;
-                $this->IdJefe = $Luchador->id;
+                $recreador = RegistroLuchador::where('cedula', '=', $this->CedulaJefe)->firstOrFail();
+                $this->NombreJefe = $recreador->NombreCompleto;
+                $this->IdJefe = $recreador->id;
             }
         }
         elseif ($estructura == 'organizador') 
         {
-            $validar_lsb = RegistroLuchador::where('cedula', $this->CedulaOrganizador)->firstOrFail(); 
+            $validar_recreador = RegistroLuchador::where('cedula', $this->CedulaOrganizador)->firstOrFail(); 
 
-            $existelsb = nbc::where('jefe_id', '=', $validar_lsb->id)
-                ->orWhere('organizador_id', '=', $validar_lsb->id)
-                ->orWhere('formador_id', '=', $validar_lsb->id)
-                ->orWhere('movilizador_id', '=', $validar_lsb->id)
-                ->orWhere('defensa_id', '=', $validar_lsb->id)
-                ->orWhere('productivo_id', '=', $validar_lsb->id)->get();
+            $existerecreador = nbc::where('jefe_id', '=', $validar_recreador->id)
+                ->orWhere('organizador_id', '=', $validar_recreador->id)
+                ->orWhere('formador_id', '=', $validar_recreador->id)
+                ->orWhere('comunicador_id', '=', $validar_recreador->id)->get();
                 
-            if (count($existelsb) > 0)
+            if (count($existerecreador) > 0)
             {
                 session()->flash('yaregistrado', 'yaregistrado');
             }
             else{
-                $Luchador = RegistroLuchador::where('cedula', '=', $this->CedulaOrganizador)->firstOrFail();
-                $this->NombreOrganizador = $Luchador->NombreCompleto;
-                $this->IdOrganizador = $Luchador->id;
+                $recreador = RegistroLuchador::where('cedula', '=', $this->CedulaOrganizador)->firstOrFail();
+                $this->NombreOrganizador = $recreador->NombreCompleto;
+                $this->IdOrganizador = $recreador->id;
             }
         }
         elseif ($estructura == 'formador')
         {
-            $validar_lsb = RegistroLuchador::where('cedula', $this->CedulaFormador)->firstOrFail(); 
+            $validar_recreador = RegistroLuchador::where('cedula', $this->CedulaFormador)->firstOrFail(); 
 
-            $existelsb = nbc::where('jefe_id', '=', $validar_lsb->id)
-                ->orWhere('organizador_id', '=', $validar_lsb->id)
-                ->orWhere('formador_id', '=', $validar_lsb->id)
-                ->orWhere('movilizador_id', '=', $validar_lsb->id)
-                ->orWhere('defensa_id', '=', $validar_lsb->id)
-                ->orWhere('productivo_id', '=', $validar_lsb->id)->get();
+            $existerecreador = nbc::where('jefe_id', '=', $validar_recreador->id)
+                ->orWhere('organizador_id', '=', $validar_recreador->id)
+                ->orWhere('formador_id', '=', $validar_recreador->id)
+                ->orWhere('comunicador_id', '=', $validar_recreador->id)->get();
                 
-            if (count($existelsb) > 0)
+            if (count($existerecreador) > 0)
             {
                 session()->flash('yaregistrado', 'yaregistrado');
             }
             else{
-                $Luchador = RegistroLuchador::where('cedula', '=', $this->CedulaFormador)->firstOrFail();
-                $this->NombreFormador = $Luchador->NombreCompleto;
-                $this->IdFormador = $Luchador->id;
+                $recreador = RegistroLuchador::where('cedula', '=', $this->CedulaFormador)->firstOrFail();
+                $this->NombreFormador = $recreador->NombreCompleto;
+                $this->IdFormador = $recreador->id;
             }
         }
-        elseif ($estructura == 'movilizador')
+        elseif ($estructura == 'comunicador')
         {
-            $validar_lsb = RegistroLuchador::where('cedula', $this->CedulaMovilizador)->firstOrFail(); 
-
-            $existelsb = nbc::where('jefe_id', '=', $validar_lsb->id)
-                ->orWhere('organizador_id', '=', $validar_lsb->id)
-                ->orWhere('formador_id', '=', $validar_lsb->id)
-                ->orWhere('movilizador_id', '=', $validar_lsb->id)
-                ->orWhere('defensa_id', '=', $validar_lsb->id)
-                ->orWhere('productivo_id', '=', $validar_lsb->id)->get();
-                
-            if (count($existelsb) > 0)
+            $validar_recreador = RegistroLuchador::where('cedula', $this->CedulaComunicador)->firstOrFail(); 
+            $existerecreador = nbc::where('jefe_id', '=', $validar_recreador->id)
+                ->orWhere('organizador_id', '=', $validar_recreador->id)
+                ->orWhere('formador_id', '=', $validar_recreador->id)
+                ->orWhere('comunicador_id', '=', $validar_recreador->id)->get();
+            if (count($existerecreador) > 0)
             {
                 session()->flash('yaregistrado', 'yaregistrado');
             }
-            else{
-                $Luchador = RegistroLuchador::where('cedula', '=', $this->CedulaMovilizador)->firstOrFail();
-                $this->NombreMovilizador = $Luchador->NombreCompleto;
-                $this->IdMovilizador = $Luchador->id;
+            else
+            {
+                $recreador = RegistroLuchador::where('cedula', '=', $this->CedulaComunicador)->firstOrFail();
+                $this->NombreComunicador = $recreador->NombreCompleto;
+                $this->IdComunicador = $recreador->id;
             } 
-        }
-        elseif ($estructura == 'defensa')
-        {
-            $validar_lsb = RegistroLuchador::where('cedula', $this->CedulaDefensa)->firstOrFail(); 
-
-            $existelsb = nbc::where('jefe_id', '=', $validar_lsb->id)
-                ->orWhere('organizador_id', '=', $validar_lsb->id)
-                ->orWhere('formador_id', '=', $validar_lsb->id)
-                ->orWhere('movilizador_id', '=', $validar_lsb->id)
-                ->orWhere('defensa_id', '=', $validar_lsb->id)
-                ->orWhere('productivo_id', '=', $validar_lsb->id)->get();
-                
-            if (count($existelsb) > 0)
-            {
-                session()->flash('yaregistrado', 'yaregistrado');
-            }
-            else{
-                $Luchador = RegistroLuchador::where('cedula', '=', $this->CedulaDefensa)->firstOrFail();
-                $this->NombreDefensa = $Luchador->NombreCompleto;  
-                $this->IdDefensa = $Luchador->id;
-            } 
-        }
-        elseif ($estructura == 'productor')
-        {
-            $validar_lsb = RegistroLuchador::where('cedula', $this->CedulaProductivo)->firstOrFail(); 
-
-            $existelsb = nbc::where('jefe_id', '=', $validar_lsb->id)
-                ->orWhere('organizador_id', '=', $validar_lsb->id)
-                ->orWhere('formador_id', '=', $validar_lsb->id)
-                ->orWhere('movilizador_id', '=', $validar_lsb->id)
-                ->orWhere('defensa_id', '=', $validar_lsb->id)
-                ->orWhere('productivo_id', '=', $validar_lsb->id)->get();
-                
-            if (count($existelsb) > 0)
-            {
-                session()->flash('yaregistrado', 'yaregistrado');
-            }
-            else{
-                $Luchador = RegistroLuchador::where('cedula', '=', $this->CedulaProductivo)->firstOrFail();
-                $this->NombreProductivo = $Luchador->NombreCompleto;   
-                $this->IdProductivo = $Luchador->id;
-            }
         }
     }
     public function editar($id)
     {
-        $nbc = NBC::findOrFail($id);
+        $nrc = NBC::findOrFail($id);
 
         $this->id = $id;
-        $this->NombreNBC = $nbc->nombre;
-        $this->CedulaJefe = $nbc->jefe->cedula;
-        $this->CedulaOrganizador = (isset($nbc->organizador)) ? $nbc->organizador->cedula : "" ;
-        $this->CedulaFormador = (isset($nbc->formador)) ? $nbc->formador->cedula : "" ;
-        $this->CedulaMovilizador = (isset($nbc->movilizador)) ? $nbc->movilizador->cedula : "" ;
-        $this->CedulaDefensa = (isset($nbc->defensa)) ? $nbc->defensa->cedula : "" ;
-        $this->CedulaProductivo = (isset($nbc->productivo)) ? $nbc->productivo->cedula : "" ;
+        $this->NombreNRC = $nrc->nombre;
+        $this->CedulaJefe = $nrc->jefe->cedula;
+        $this->CedulaOrganizador = (isset($nrc->organizador)) ? $nrc->organizador->cedula : "" ;
+        $this->CedulaFormador = (isset($nrc->formador)) ? $nrc->formador->cedula : "" ;
+        $this->CedulaComunicador = (isset($nrc->comunicador)) ? $nrc->comunicador->cedula : "" ;
 
-        $this->IdJefe = $nbc->jefe_id;
-        $this->IdOrganizador = (isset($nbc->organizador)) ? $nbc->organizador_id : null ;
-        $this->IdFormador = (isset($nbc->formador)) ? $nbc->formador_id : null ;
-        $this->IdMovilizador = (isset($nbc->movilizador)) ? $nbc->movilizador_id : null ;
-        $this->IdDefensa = (isset($nbc->defensa)) ? $nbc->defensa_id : null ;
-        $this->IdProductivo = (isset($nbc->productivo)) ? $nbc->productivo_id : null ;
+        $this->IdJefe = $nrc->jefe_id;
+        $this->IdOrganizador = (isset($nrc->organizador)) ? $nrc->organizador_id : null ;
+        $this->IdFormador = (isset($nrc->formador)) ? $nrc->formador_id : null ;
+        $this->IdComunicador = (isset($nrc->comunicador)) ? $nrc->comuncador_id : null ;
 
-        $this->PoseeOrganizador = (isset($nbc->organizador)) ? true : false ;
-        $this->PoseeFormador = (isset($nbc->formador)) ? true : false ;
-        $this->PoseeMovilizador = (isset($nbc->movilizador)) ? true : false ;
-        $this->PoseeDefensa = (isset($nbc->defensa)) ? true : false ;
-        $this->PoseeProductivo = (isset($nbc->productivo)) ? true : false ;
+        $this->PoseeOrganizador = (isset($nrc->organizador)) ? true : false ;
+        $this->PoseeFormador = (isset($nrc->formador)) ? true : false ;
+        $this->PoseeComunicador = (isset($nrc->comunicador)) ? true : false ;
 
-        $this->NombreJefe = $nbc->jefe->cedula;
-        dd($this->NombreJefe);
-        $this->NombreOrganizador = (isset($nbc->organizador)) ? $nbc->organizador->NombreCompleto : "" ;
-        $this->NombreFormador = (isset($nbc->formador)) ? $nbc->formador->NombreCompleto : "" ;
-        $this->NombreMovilizador = (isset($nbc->movilizador)) ? $nbc->movilizador->NombreCompleto : "" ;
-        $this->NombreDefensa = (isset($nbc->defensa)) ? $nbc->defensa->NombreCompleto : "" ;
-        $this->NombreProductivo = (isset($nbc->productivo)) ? $nbc->productivo->NombreCompleto : "" ;
+        $this->NombreJefe = $nrc->jefe->cedula;
+        $this->NombreOrganizador = (isset($nrc->organizador)) ? $nrc->organizador->NombreCompleto : "" ;
+        $this->NombreFormador = (isset($nrc->formador)) ? $nrc->formador->NombreCompleto : "" ;
+        $this->NombreComunicador = (isset($nrc->comunicador)) ? $nrc->comunicador->NombreCompleto : "" ;
 
-        $this->estadoId = $nbc->estado_id;
-        $this->municipioId = $nbc->municipio_id;
-        $this->municipios = Municipio::where('estado_id', $nbc->estado_id)->get();
-        $this->parroquiaId = $nbc->parroquia_id;
-        $this->parroquias = Parroquia::where('municipio_id', $nbc->municipio_id)->get();
+        $this->estadoId = $nrc->estado_id;
+        $this->municipioId = $nrc->municipio_id;
+        $this->municipios = Municipio::where('estado_id', $nrc->estado_id)->get();
+        $this->parroquiaId = $nrc->parroquia_id;
+        $this->parroquias = Parroquia::where('municipio_id', $nrc->municipio_id)->get();
 
-        $this->CantConsejoComunal = $nbc->cant_consejos_comunales;
-        $this->CantBaseMisiones = $nbc->cant_bases_misiones;
-        $this->CantUrbanismo = $nbc->cant_urbanismos;
-        $this->CantCDI = $nbc->cant_cdi;
-
-        return redirect('/nbc/editar', ['nbcs' => $nbc]);
+        $this->circuitos_comunales = $nrc->circuitos_comunales;
+        $this->bases_misiones = $nrc->bases_misiones;
+        $this->casa_alimentacion = $nrc->casa_alimentacion;
+        $this->consejos_comunales = $nrc->consejos_comunales;
+        $this->urbanismos = $nrc->urbanismos;
+        $this->parques_nacionales = $nrc->parques_nacionales;
+        $this->parques_recreacion = $nrc->parques_recreacion;
+        $this->rios = $nrc->rios;
+        $this->playas = $nrc->playas;
+        $this->balnearios = $nrc->balnearios;
+        $this->plazas = $nrc->plazas;
+        $this->canchas = $nrc->canchas;
+        
+        return redirect('/nrc/editar')->with('nrcs', $nrc);
     }
     public function guardar()
     {
-        $lsb = NBC::updateOrCreate(['id' => $this->id],
+        $nrc = NBC::updateOrCreate(['id' => $this->id],
             [
-            'nombre' => $this->NombreNBC,
+            'nombre' => $this->NombreNRC,
             'codigo' => $this->parroquiaId.random_int('1000', '9999'),
             'jefe_id' => $this->IdJefe,
             'organizador_id' => $this->IdOrganizador,
             'formador_id' => $this->IdFormador,
-            'movilizador_id' => $this->IdMovilizador,
-            'defensa_id' => $this->IdDefensa,
-            'productivo_id' => $this->IdProductivo,
+            'comunicador_id' => $this->IdComunicador,
             'cant_consejos_comunales' => $this->CantConsejoComunal,
             'cant_bases_misiones' => $this->CantBaseMisiones,
             'cant_urbanismos' => $this->CantUrbanismo,
@@ -297,7 +235,7 @@ class Index extends Component
         } else {
             $this->ContentOrganizador = true; 
             $this->ContentFormador = false;
-            $this->ContentMovilizador = false;
+            $this->Contentcomunicador = false;
             $this->ContentDefensa = false;
             $this->ContentProductivo = false;
         }
@@ -323,7 +261,7 @@ class Index extends Component
         } else {
             $this->ContentFormador = true;
             $this->ContentOrganizador = false; 
-            $this->ContentMovilizador = false;
+            $this->Contentcomunicador = false;
             $this->ContentDefensa = false;
             $this->ContentProductivo = false;
         }
@@ -340,24 +278,24 @@ class Index extends Component
     }
     public function MenuMovilizacion()
     {
-        if ($this->ContentMovilizador) {
-            $this->ContentMovilizador = false; 
+        if ($this->Contentcomunicador) {
+            $this->Contentcomunicador = false; 
         } else {
-            $this->ContentMovilizador = true;
+            $this->Contentcomunicador = true;
             $this->ContentOrganizador = false; 
             $this->ContentFormador = false;
             $this->ContentDefensa = false;
             $this->ContentProductivo = false;
         }
     }
-    public function updatedPoseeMovilizador()
+    public function updatedPoseecomunicador()
     {
-        if ($this->FormMovilizador) {
-            $this->FormMovilizador = false;
-            $this->CedulaMovilizador = null;
-            $this->NombreMovilizador = null;
+        if ($this->Formcomunicador) {
+            $this->Formcomunicador = false;
+            $this->Cedulacomunicador = null;
+            $this->Nombrecomunicador = null;
         } else {
-            $this->FormMovilizador = true;
+            $this->Formcomunicador = true;
         }
     }
     public function MenuDefensa()
@@ -368,7 +306,7 @@ class Index extends Component
             $this->ContentDefensa = true; 
             $this->ContentOrganizador = false; 
             $this->ContentFormador = false;
-            $this->ContentMovilizador = false;
+            $this->Contentcomunicador = false;
             $this->ContentProductivo = false;
         }
     }
@@ -390,7 +328,7 @@ class Index extends Component
             $this->ContentProductivo = true; 
             $this->ContentOrganizador = false; 
             $this->ContentFormador = false;
-            $this->ContentMovilizador = false;
+            $this->Contentcomunicador = false;
             $this->ContentDefensa = false;
         }
     }
@@ -413,26 +351,26 @@ class Index extends Component
         $this->NombreOrganizador = null;
         $this->CedulaFormador = null;
         $this->NombreFormador = null;
-        $this->CedulaMovilizador = null;
-        $this->NombreMovilizador = null;
+        $this->Cedulacomunicador = null;
+        $this->Nombrecomunicador = null;
         $this->CedulaDefensa = null;
         $this->NombreDefensa = null;
         $this->CedulaProductivo = null;
         $this->NombreProductivo = null;
         $this->PoseeOrganizador = false;
         $this->PoseeFormador = false;
-        $this->PoseeMovilizador = false;
+        $this->Poseecomunicador = false;
         $this->PoseeDefensa = false;
         $this->PoseeProductivo = false;
         $this->ContentOrganizador = false;
         $this->ContentFormador = false;
-        $this->ContentMovilizador = false;
+        $this->Contentcomunicador = false;
         $this->ContentDefensa = false;
         $this->ContentProductivo = false; 
         $this->IdJefe = null;
         $this->IdOrganizador = null;
         $this->IdFormador = null;
-        $this->IdMovilizador = null;
+        $this->Idcomunicador = null;
         $this->IdDefensa = null;
         $this->IdProductivo = null;
         $this->CantConsejoComunal = null;

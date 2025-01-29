@@ -16,12 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory()->create([
-        //     'name' => 'admin',
-        //     'email' => 'admin@softui.com',
-        //     'password' => Hash::make('secret')
-        // ]);
-
         $this->call(PaisSeeder::class);
         $this->call(NivelSeeder::class);
         $this->call(RoleSeeder::class);
@@ -31,16 +25,13 @@ class DatabaseSeeder extends Seeder
         $this->call(CentrosSeeder::class);
         $this->call(Centros2Seeder::class);
         $this->call(Centros3Seeder::class);
-        $this->call(AvanzadaSeeder::class);
         $this->call(GeneroSeeder::class);
         $this->call(NivelAcademicoSeeder::class);
         $this->call(ProfesionSeeder::class);
         $this->call(ResponsabilidadSeeder::class);
-        $this->call(RegistroLuchadorSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(SaimeSeeder::class);
         $this->call(cneSeeder::class);
-        $this->call(AreaSeeder::class);
         $this->call(FormacionSeeder::class);
     }
 }

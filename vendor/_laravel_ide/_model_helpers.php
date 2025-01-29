@@ -16,8 +16,8 @@ namespace App\Models {
      * @property bigint(20) unsigned|null $profesion_id
      * @property bigint(20) unsigned|null $nivel_academico_id
      * @property bigint(20) unsigned|null $genero_id
-     * @property string|null $codigo
-     * @property int(11)|null $serial
+     * @property bigint(20)|null $codigo
+     * @property bigint(20)|null $serial
      * @property bigint(20)|null $cuenta
      * @property int(11) $edad
      * @property string $correo
@@ -561,17 +561,20 @@ namespace App\Models {
      * @property bigint(20) unsigned|null $parroquia_id
      * @property bigint(20) unsigned|null $municipio_id
      * @property bigint(20) unsigned|null $estado_id
-     * @property int(11)|null $cant_lsb_vocero_cc
-     * @property int(11)|null $cant_lsb_jefe_calle
-     * @property int(11)|null $cant_lsb_jefe_comunidad
-     * @property int(11)|null $cant_lsb_jefe_ubch
-     * @property int(11)|null $cant_cdi
-     * @property int(11)|null $cant_urbanismos
-     * @property int(11)|null $cant_bases_misiones
-     * @property int(11)|null $cant_consejos_comunales
-     * @property char(36)|null $productivo_id
-     * @property char(36)|null $defensa_id
-     * @property char(36)|null $movilizador_id
+     * @property int(11)|null $canchas
+     * @property int(11)|null $plazas
+     * @property int(11)|null $balnearios
+     * @property int(11)|null $playas
+     * @property int(11)|null $rios
+     * @property int(11)|null $parques_recreacion
+     * @property int(11)|null $parques_nacionales
+     * @property int(11)|null $urbanismos
+     * @property int(11)|null $consejos_comunales
+     * @property int(11)|null $casa_alimentacion
+     * @property int(11)|null $base_misiones
+     * @property int(11)|null $bases_misiones
+     * @property int(11)|null $circuitos_comunales
+     * @property char(36)|null $comunicador_id
      * @property char(36)|null $formador_id
      * @property char(36)|null $organizador_id
      * @property char(36)|null $jefe_id
@@ -593,17 +596,20 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|NBC whereJefeId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|NBC whereOrganizadorId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|NBC whereFormadorId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereMovilizadorId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereDefensaId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereProductivoId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCantConsejosComunales($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCantBasesMisiones($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCantUrbanismos($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCantCdi($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCantLsbJefeUbch($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCantLsbJefeComunidad($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCantLsbJefeCalle($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCantLsbVoceroCc($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereComunicadorId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCircuitosComunales($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereBasesMisiones($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereBaseMisiones($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCasaAlimentacion($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereConsejosComunales($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereUrbanismos($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereParquesNacionales($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereParquesRecreacion($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereRios($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC wherePlayas($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereBalnearios($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC wherePlazas($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|NBC whereCanchas($value)
      * @method static \Illuminate\Database\Eloquent\Builder|NBC whereEstadoId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|NBC whereMunicipioId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|NBC whereParroquiaId($value)
